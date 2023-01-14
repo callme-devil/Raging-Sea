@@ -10,6 +10,9 @@ import waterFragmentShader from './shaders/water/fragment.glsl'
  */
 // Debug
 const gui = new dat.GUI({ width: 340 })
+const BigWavesFolder = gui.addFolder('BigWaves');
+const Color = gui.addFolder("Color");
+const SmallWaves = gui.addFolder("SmallWaves");
 const debugObject = {}
 
 // Canvas
@@ -52,18 +55,23 @@ const waterMaterial = new THREE.ShaderMaterial({
 
 // Debug
 
-gui.add(waterMaterial.uniforms.uBigWavesElevation , 'value').min(0).max(1).step(0.001).name('uBigWavesElevation')
-gui.add(waterMaterial.uniforms.uBigWavesFrequency.value , 'x').min(0).max(10).step(0.001).name('uBigWavesFrequency.X')
-gui.add(waterMaterial.uniforms.uBigWavesFrequency.value , 'y').min(0).max(10).step(0.001).name('uBigWavesFrequency.Y')
-gui.add(waterMaterial.uniforms.uBigWavesSpeed , 'value').min(0).max(10).step(0.001).name('uBigWavesSpeed')
+BigWavesFolder.add(waterMaterial.uniforms.uBigWavesElevation , 'value').min(0).max(1).step(0.001).name('uBigWavesElevation')
+BigWavesFolder.add(waterMaterial.uniforms.uBigWavesFrequency.value , 'x').min(0).max(10).step(0.001).name('uBigWavesFrequency.X')
+BigWavesFolder.add(waterMaterial.uniforms.uBigWavesFrequency.value , 'y').min(0).max(10).step(0.001).name('uBigWavesFrequency.Y')
+BigWavesFolder.add(waterMaterial.uniforms.uBigWavesSpeed , 'value').min(0).max(10).step(0.001).name('uBigWavesSpeed')
 
-gui.addColor(debugObject , 'depthColor').onChange(() => {waterMaterial.uniforms.uDepthColor.value.set(debugObject.depthColor)})
+SmallWaves.add(waterMaterial.uniforms.uSmallWavesElevation , 'value').min(0).max(1).step(0.001).name('uSmallWavesElevation')
+SmallWaves.add(waterMaterial.uniforms.uSmallWavesFrequency , 'value').min(0).max(30).step(0.001).name('uSmallWavesFrequency')
+SmallWaves.add(waterMaterial.uniforms.uSmallWavesSpeed, 'value').min(0).max(4).step(0.001).name('uSmallWavesSpeed')
+SmallWaves.add(waterMaterial.uniforms.uSmallWavesIterations , 'value').min(0).max(10).step(0.001).name('uSmallWavesIterations')
+
+Color.addColor(debugObject , 'depthColor').onChange(() => {waterMaterial.uniforms.uDepthColor.value.set(debugObject.depthColor)})
 .name('depthColor')
-gui.addColor(debugObject , 'surfaceColor').onChange(() => {waterMaterial.uniforms.uDepthColor.value.set(debugObject.surfaceColor)})
+Color.addColor(debugObject , 'surfaceColor').onChange(() => {waterMaterial.uniforms.uDepthColor.value.set(debugObject.surfaceColor)})
 .name('surfaceColor')
 
-gui.add(waterMaterial.uniforms.uColorOffset , 'value').min(0).max(1).step(0.001).name('uColorOffset')
-gui.add(waterMaterial.uniforms.uColorMultiplier , 'value').min(0).max(10).step(0.001).name('uColorMultiplier')
+Color.add(waterMaterial.uniforms.uColorOffset , 'value').min(0).max(1).step(0.001).name('uColorOffset')
+Color.add(waterMaterial.uniforms.uColorMultiplier , 'value').min(0).max(10).step(0.001).name('uColorMultiplier')
 
 
 // Mesh
